@@ -1,0 +1,44 @@
+Test plan 
+----------
+
+/*
+  Program Logic:  In this program we are required to do a liner search on a sorted array and find different operator related results.
+               All operators are clusterd around the key. If the key is not there , still other values will be prsent .
+
+               Drawback:
+               of my code is, if the array has 10k items and max value is 12000. If we have to find if any value > 12000,
+               my code starts from index 0 . It does not start from last index. So  extra looping happens, it does not take advantage of 
+               data .  I tried initially to measure distance of the key from start and end point .
+               depending on distance we will do measurement, considering the scope and time limit that has not been implemented.
+
+*/
+
+Functional Testing:
+
+1. Test for n_items = 1 or Test for n_items = 2
+2. Test for n_items >= 3 and working_items < MAX_INT
+3. If n_items = MAX_INT does it work . 
+4. Working with +ve and -ve integers.
+5. No memory leak in code
+6. Test for  ascending cases and descending cases
+7. For ascending case test for all 5 scenarios [ Equals , greaterthan, greaterthanequals, lessthan , greaterthanequals]
+8. For Equals case, when the value is present and value not present
+9. #8 test for greaterthanequals and greaterthanequals case
+10. Does the returned index matches and also SearchResults
+
+
+Performance Test:
+
+1. Test with lot of workers in parallel  and in code if any bottlenecks
+2. Its  a CPU bound process, depends on loops. Test How much CPU usage
+3. Test multiple workers with arrays with bigger ( > 100k) size.
+4. What if the datasize is huge and can't fit into memory 
+   In my code final calculation is performed on a fixed size list, so processinga nd getting result will work.
+   For a map-reduce job to handle huge array , the in reduce phase the final list will be generated.
+
+5. Profiling code  
+6. Test Any cache  support present , if same array , same key and same operation performed multiple times does the time changes
+      Currently no cache support in code
+
+7. Making a list of 100 opeartions with each one [100 / 6 times ], how performance happens.
+8. Test disk usage.         
