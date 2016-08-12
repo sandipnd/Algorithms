@@ -30,6 +30,7 @@ class countislands(object):
                if self.island[i][j] and not self.visited[(i, j)]:
                   self.dfs(i, j)
                   count += 1
+
         return count
 
 island = [[1, 1, 0, 0, 0],
