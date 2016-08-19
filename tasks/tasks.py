@@ -9,6 +9,40 @@ import Queue
 from threading import Thread
 from tasks.task import Task
 
+PENDING = 'PENDING'
+EXECUTING = 'EXECUTING'
+CHECKING = 'CHECKING'
+FINISHED = 'FINISHED'
+
+class Task(Future):
+    def __init__(self, name):
+        Future.__init__(self)
+        self.log = logger.Logger.get_logger()
+        self.state = PENDING
+        self.name = name
+        self.cancelled = False
+        self.retries = 0
+        self.res = None
+
+    def step(self, task_manager):
+        if not self.done():
+            if self.state == PENDING:
+                self.state = EXECUTING
+                task_manager.schedule(self)
+            elif self.state == EXECUTING:
+                self.execute(task_manager)
+            elif self.state == CHECKING:
+                self.check(task_manager)
+            elif self.state != FINISHED:
+                raise Exception("Bad State in {0}: {1}".format(self.name, self.state))
+
+    def execute(self, task_manager):
+        raise NotImplementedError
+
+    def check(self, task_manager):
+        raise NotImplementedError
+
+
 class TaskManager(Thread):
     def __init__(self, thread_name=None):
         Thread.__init__(self)
