@@ -9,6 +9,12 @@ except Exception, e:
     os.system('pip install paramiko')
     import paramiko
 
+def start_environment(cbnodes, prefix):
+	cb_args = "couchbase_base={0}".format(cbnodes)
+	args = ["docker-compose", "-p='{0}'".format(prefix), "scale", cb_args] #,  "spark_master=1",  spark_worker_args]
+        print 'start environment args are', args
+	run_command(args)
+
 class docker(object):
      def __init__(self,host,username,password,num_container=4):
         self.client = paramiko.SSHClient()
