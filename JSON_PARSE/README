@@ -1,7 +1,6 @@
 The problem
 You’re tasked with taking entries of personal information in multiple formats and normalizing each entry into a standard JSON format.
-Python version
-The utility should be compatible with Python 2.7. If you can’t meet this requirement, let us know. Your utility should also only import modules that are available in the standard library. This makes the utility easy to test for us here at Percolate.
+
 Input
 Your program will be fed an input file of n lines. Each line contains “entry” information, which consists of a first name, last name, phone number, color, and zip code.
 The order and format of these lines vary in three separate ways. The three acceptable formats are as follows:
