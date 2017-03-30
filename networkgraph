@@ -2,12 +2,12 @@
 
 The program is to create dependent network graph
 Joe
-  Addepar
+  Axepar
 Joe's 401k
 Lonsdale Trust
   Goldman Sachs
   Goldman Trust
-  Addepar
+  Axepar
   Tree House
   Google
   Berkshire
@@ -24,14 +24,14 @@ data = [
   {"owner" : "Lonsdale Trust", "owned_thing": "Google"},
   {"owner" : "Lonsdale Trust", "owned_thing": "Berkshire"},
   {"owner" : "Lonsdale Trust", "owned_thing": "Facebook"},
-  {"owner" : "Joe", "owned_thing": "Addepar"},
+  {"owner" : "Joe", "owned_thing": "Axepar"},
   {"owner" : "Joe", "owned_thing": "Joe's 401k"},
   {"owner" : "Joe", "owned_thing": "Lonsdale Trust"},
   {"owner" : "Lonsdale Trust", "owned_thing": "Goldman Trust"},
   {"owner" : "Lonsdale Trust", "owned_thing": "Caterpillar"},
   {"owner" : "Joe's 401k", "owned_thing": "Goldman Sachs"},
   {"owner" : "Joe's 401k", "owned_thing": "Goldman Trust"},
-  {"owner" : "Joe's 401k", "owned_thing": "Addepar"},
+  {"owner" : "Joe's 401k", "owned_thing": "Axepar"},
   {"owner" : "Joe's 401k", "owned_thing": "Tree House"},
   {"owner" : "Lonsdale Trust", "owned_thing": "Lonsdale Holdings"},
   {"owner" : "Lonsdale Holdings", "owned_thing": "Beachfront Property"},
