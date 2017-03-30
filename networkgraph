@@ -1,6 +1,22 @@
 '''
 
 The program is to create dependent network graph
+Joe
+  Addepar
+Joe's 401k
+Lonsdale Trust
+  Goldman Sachs
+  Goldman Trust
+  Addepar
+  Tree House
+  Google
+  Berkshire
+  Facebook
+  Goldman Trust
+  Caterpillar
+Lonsdale Holdings
+  Beachfront Property
+  Widgets Inc
 
 '''
 
