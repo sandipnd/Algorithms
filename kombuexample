@@ -1,0 +1,59 @@
+'''
+ This one is example of producer consumer using kombu .
+ Multiple producer -> single consumer 
+ 
+ '''
+ 
+ import json
+from kombu import Queue, Connection, Exchange, Producer, Consumer
+
+
+class QueueManager(object):
+
+    def __init__(self, master_node):
+        self.connection = None
+        self.channel = None
+        self.exchange_name = "ex-" + master_node
+        self.exchange = None
+        self.routing_key = "route-" + master_node
+        self.queue_name = "queue-" + master_node
+        self.queue = None
+        self.producer = None
+
+    def setup(self):
+        self.connection = Connection(celeryremote.BROKER_URL)
+        self.channel = self.connection.channel()
+        self.exchange = Exchange(self.exchange_name, type="direct")
+        self.queue = Queue(name=self.queue_name, exchange=self.exchange, routing_key=self.routing_key)
+        self.queue.maybe_bind(self.connection)
+        self.queue.declare()
+
+    def process_text(self, filename):
+        data_store = {}
+        with open(filename, "r") as fp:
+            for line in fp:
+                typeop, details, value = [x.strip() for x in line.split(',')]
+                if typeop not  in data_store:
+                    data_store[typeop] = {}
+                data_store[typeop][details] = value
+
+        return json.dumps(data_store)
+
+    def process_message(self, body, message):
+        json.loads(body)
+        message.ack()
+
+    def publish_log(self, filename):
+        self.producer = Producer(exchange=self.exchange, channel=self.channel, routing_key=self.routing_key)
+        self.producer.publish(self.process_text(filename))
+
+    def consume_log(self):
+        _, msg_count, _ = self.queue.queue_declare()
+        consumer = Consumer(self.connection, queues=self.queue, callbacks=[self.process_message], accept=["text/plain"])
+        consumer.consume()
+        i = 0
+        while i < msg_count:
+            self.connection.drain_events(timeout=2)
+            i += 1
+        consumer.cancel()
+        self.queue.purge()
