@@ -1,0 +1,72 @@
+'''
+
+The program is to create dependent network graph
+
+'''
+
+data = [
+  {"owner" : "Lonsdale Trust", "owned_thing": "Google"},
+  {"owner" : "Lonsdale Trust", "owned_thing": "Berkshire"},
+  {"owner" : "Lonsdale Trust", "owned_thing": "Facebook"},
+  {"owner" : "Joe", "owned_thing": "Addepar"},
+  {"owner" : "Joe", "owned_thing": "Joe's 401k"},
+  {"owner" : "Joe", "owned_thing": "Lonsdale Trust"},
+  {"owner" : "Lonsdale Trust", "owned_thing": "Goldman Trust"},
+  {"owner" : "Lonsdale Trust", "owned_thing": "Caterpillar"},
+  {"owner" : "Joe's 401k", "owned_thing": "Goldman Sachs"},
+  {"owner" : "Joe's 401k", "owned_thing": "Goldman Trust"},
+  {"owner" : "Joe's 401k", "owned_thing": "Addepar"},
+  {"owner" : "Joe's 401k", "owned_thing": "Tree House"},
+  {"owner" : "Lonsdale Trust", "owned_thing": "Lonsdale Holdings"},
+  {"owner" : "Lonsdale Holdings", "owned_thing": "Beachfront Property"},
+  {"owner" : "Lonsdale Holdings", "owned_thing": "Widgets Inc"}
+]
+
+import Queue
+
+def createGraph(data):
+    if data: #if data exists
+        graphStore = {}
+        parentOwners = {}
+        for value in data:
+                try:
+                    owner = value["owner"]
+                    owned_thing = value["owned_thing"]
+
+                    parentOwners[owned_thing] = False
+                    if owner in parentOwners:
+                        parentOwners[owner] = True and parentOwners[owner]
+                    else:
+                        parentOwners[owner] = True
+
+                    if owner in graphStore:
+                       print  owned_thing
+                       graphStore[owner].append(owned_thing)
+                    else:
+                       graphStore[owner] = [owned_thing] # if duplicate data
+
+                except KeyError, e: #if any of key is missing
+                    return None, None
+
+
+        return parentOwners, graphStore
+    return None
+
+
+def displayNetwork(network, start):
+    if network:
+        q = Queue.Queue()
+        q.put(start)
+        while not q.empty():
+            value = q.get()
+            if value in network:
+                for v in network[value]:
+                    q.put(v)
+                print value
+            else:
+                print ' ',value
+
+parents, network = createGraph(data)
+for key in parents.keys():
+    if parents[key]:
+        displayNetwork(network, key)
